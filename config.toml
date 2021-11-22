@@ -1,0 +1,4 @@
+baseURL = 'https://kassiansun.github.io/'
+languageCode = 'en-us'
+title = 'Kassian Sun'
+theme = 'PaperMod'
