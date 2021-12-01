@@ -3,7 +3,7 @@ title: 'Migrate From Bash to Zsh'
 date: 2021-11-28T10:14:21+08:00
 ---
 
-# The story of bash and my taste on command line
+## The story of bash and my taste on command line
 
 I've been using `bash` as the development environment for a long time. The reason for choosing `bash` is its ubiquity.
 Most desktop & server Linux distributions and Docker images will ship with bash, which makes it a great fit for a
@@ -12,7 +12,8 @@ code on. But since ~2014 my bash configuration has degraded several times, for t
 
 1. To support different host environments, from Arch Linux to WSL to Cygwin to Mac OS
 2. To support different terminal environments, from XShell/iTerm to putty to the serial console
-   The need for "use-everywhere" decreased my coding productivity for the most time and made the configuration
+
+The need for "use-everywhere" decreased my coding productivity for the most time and made the configuration
    harder and harder to maintain.
 
 Since 2019 I've been a heavy user of Macbook, mainly because
@@ -33,7 +34,7 @@ of Arch Linux. The hardware of Mac OS was always a pain point, but not anymore w
 purchased an M1 Macbook, after daily usages of more than half a year, I decided to boost my productivity on Mac OS
 to maximum, which means the productivity on command line.
 
-# The good parts of `oh-my-zsh` and why it was successful
+## The good parts of `oh-my-zsh` and why it was successful
 
 I've heard of `oh-my-zsh` for several years, `zsh` is not a ubiquity shell, but since I've decided to give up
 on the "use-everywhere" feature, it's not a problem anymore. After one-week experience with `oh-my-zsh`, there're
@@ -49,7 +50,7 @@ several points I've noticed:
 All of these advantages make `oh-my-zsh` a safe suggestion for newbie programmers. It's neither exotic nor bizarre,
 it's a decent good starting point and everything you learned with it will be useful later.
 
-# Some pain points as a former bash user
+## Some pain points as a former bash user
 
 1. `git` plugin shiped by default pollutes the command line with a super long list of `git` shortcuts, as a heavy user of `.gitconfig`,
    it's useless and confusing.
