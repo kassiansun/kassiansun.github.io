@@ -1,6 +1,10 @@
 ---
 title: "Hugo on Github Pages Returns 404"
 date: 2021-11-22T11:59:11+08:00
+tags:
+- personal
+- blog
+- hugo
 ---
 
 Although followed the official documentation and got it built correctly, the GitHub page still

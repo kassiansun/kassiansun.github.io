@@ -1,6 +1,8 @@
 ---
 title: "Hello Word"
 date: 2021-11-22T11:03:54+08:00
+tags:
+- personal
 ---
 
 Yes, this is my first post.

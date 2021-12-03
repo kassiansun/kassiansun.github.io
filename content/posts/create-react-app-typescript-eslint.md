@@ -1,6 +1,10 @@
 ---
 title: 'Quick Start Guide with create-react-app (TypeScript + Eslint + Prettier)'
 date: 2021-12-02T12:13:43+08:00
+tags:
+- development
+- web
+- react
 ---
 
 ## Why use `create-react-app`

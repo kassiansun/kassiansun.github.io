@@ -1,6 +1,9 @@
 ---
 title: 'Migrate From Bash to Zsh'
 date: 2021-11-28T10:14:21+08:00
+tags:
+- development
+- terminal
 ---
 
 ## The story of bash and my taste on command line

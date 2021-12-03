@@ -1,6 +1,10 @@
 ---
 title: "Hugo Extended Mode on Github Pages"
 date: 2021-11-22T11:35:34+08:00
+tags:
+- personal
+- blog
+- hugo
 ---
 
 When I was trying to push this repository to GitHub, by following the [Quick Start](https://gohugo.io/getting-started/quick-start/) and
