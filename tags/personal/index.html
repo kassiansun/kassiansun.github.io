@@ -3,11 +3,11 @@
 <meta http-equiv=x-ua-compatible content="IE=edge">
 <meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no">
 <meta name=robots content="index, follow">
-<title>Tags | Kassian Sun</title>
+<title>personal | Kassian Sun</title>
 <meta name=keywords content>
 <meta name=description content>
 <meta name=author content>
-<link rel=canonical href=https://kassiansun.github.io/tags/>
+<link rel=canonical href=https://kassiansun.github.io/tags/personal/>
 <link crossorigin=anonymous href=/assets/css/stylesheet.min.c88963fe2d79462000fd0fb1b3737783c32855d340583e4523343f8735c787f0.css integrity="sha256-yIlj/i15RiAA/Q+xs3N3g8MoVdNAWD5FIzQ/hzXHh/A=" rel="preload stylesheet" as=style>
 <link rel=icon href=https://kassiansun.github.io/favicon.ico>
 <link rel=icon type=image/png sizes=16x16 href=https://kassiansun.github.io/favicon-16x16.png>
@@ -17,17 +17,17 @@
 <meta name=theme-color content="#2e2e33">
 <meta name=msapplication-TileColor content="#2e2e33">
 <meta name=generator content="Hugo 0.89.4">
-<link rel=alternate type=application/rss+xml href=https://kassiansun.github.io/tags/index.xml>
+<link rel=alternate type=application/rss+xml href=https://kassiansun.github.io/tags/personal/index.xml>
 <noscript>
 <style>#theme-toggle,.top-link{display:none}</style>
 <style>@media(prefers-color-scheme:dark){:root{--theme:rgb(29, 30, 32);--entry:rgb(46, 46, 51);--primary:rgb(218, 218, 219);--secondary:rgb(155, 156, 157);--tertiary:rgb(65, 66, 68);--content:rgb(196, 196, 197);--hljs-bg:rgb(46, 46, 51);--code-bg:rgb(55, 56, 62);--border:rgb(51, 51, 51)}.list{background:var(--theme)}.list:not(.dark)::-webkit-scrollbar-track{background:0 0}.list:not(.dark)::-webkit-scrollbar-thumb{border-color:var(--theme)}}</style>
 </noscript>
-<script type=application/javascript>var doNotTrack=!1;doNotTrack||(function(a,e,f,g,b,c,d){a.GoogleAnalyticsObject=b,a[b]=a[b]||function(){(a[b].q=a[b].q||[]).push(arguments)},a[b].l=1*new Date,c=e.createElement(f),d=e.getElementsByTagName(f)[0],c.async=1,c.src=g,d.parentNode.insertBefore(c,d)}(window,document,'script','https://www.google-analytics.com/analytics.js','ga'),ga('create','UA-213473194-1','auto'),ga('send','pageview'))</script><meta property="og:title" content="Tags">
+<script type=application/javascript>var doNotTrack=!1;doNotTrack||(function(a,e,f,g,b,c,d){a.GoogleAnalyticsObject=b,a[b]=a[b]||function(){(a[b].q=a[b].q||[]).push(arguments)},a[b].l=1*new Date,c=e.createElement(f),d=e.getElementsByTagName(f)[0],c.async=1,c.src=g,d.parentNode.insertBefore(c,d)}(window,document,'script','https://www.google-analytics.com/analytics.js','ga'),ga('create','UA-213473194-1','auto'),ga('send','pageview'))</script><meta property="og:title" content="personal">
 <meta property="og:description" content>
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://kassiansun.github.io/tags/">
+<meta property="og:url" content="https://kassiansun.github.io/tags/personal/">
 <meta name=twitter:card content="summary">
-<meta name=twitter:title content="Tags">
+<meta name=twitter:title content="personal">
 <meta name=twitter:description content>
 </head>
 <body class=list id=top>
@@ -47,31 +47,44 @@
 </header>
 <main class=main>
 <header class=page-header>
-<h1>Tags</h1>
+<h1>personal</h1>
 </header>
-<ul class=terms-tags>
-<li>
-<a href=https://kassiansun.github.io/tags/blog/>blog <sup><strong><sup>2</sup></strong></sup> </a>
-</li>
-<li>
-<a href=https://kassiansun.github.io/tags/development/>development <sup><strong><sup>2</sup></strong></sup> </a>
-</li>
-<li>
-<a href=https://kassiansun.github.io/tags/hugo/>hugo <sup><strong><sup>2</sup></strong></sup> </a>
-</li>
-<li>
-<a href=https://kassiansun.github.io/tags/personal/>personal <sup><strong><sup>3</sup></strong></sup> </a>
-</li>
-<li>
-<a href=https://kassiansun.github.io/tags/react/>react <sup><strong><sup>1</sup></strong></sup> </a>
-</li>
-<li>
-<a href=https://kassiansun.github.io/tags/terminal/>terminal <sup><strong><sup>1</sup></strong></sup> </a>
-</li>
-<li>
-<a href=https://kassiansun.github.io/tags/web/>web <sup><strong><sup>1</sup></strong></sup> </a>
-</li>
-</ul>
+<article class="post-entry tag-entry">
+<header class=entry-header>
+<h2>Hugo on Github Pages Returns 404
+</h2>
+</header>
+<section class=entry-content>
+<p>Although followed the official documentation and got it built correctly, the GitHub page still returns 404. After some investigation with Branches and Pages settings of my GitHub repository, I realize that built means a different thing for GitHub. Since the pages are built by Hugo, GitHub doesn’t build the page anymore (unlike the Jekyll I used before). So the source branch shouldn’t be master, but gh-pages, after switching Source to the correct branch, it works now....</p>
+</section>
+<footer class=entry-footer><span title="2021-11-22 11:59:11 +0800 +0800">November 22, 2021</span></footer>
+<a class=entry-link aria-label="post link to Hugo on Github Pages Returns 404" href=https://kassiansun.github.io/posts/hugo-404-github-pages/></a>
+</article>
+<article class="post-entry tag-entry">
+<header class=entry-header>
+<h2>Hugo Extended Mode on Github Pages
+</h2>
+</header>
+<section class=entry-content>
+<p>When I was trying to push this repository to GitHub, by following the Quick Start and Host on GitHub, GitHub actions failed to build with this error message:
+Error: Error building site: TOCSS: failed to transform "ananke/css/main.css" (text/css). Check your Hugo installation; you need the extended version to build SCSS/SASS.: this feature is not available in your current Hugo version, see https://goo.gl/YMrWcn for more information So the answer is simple, comment the #extended: true in ....</p>
+</section>
+<footer class=entry-footer><span title="2021-11-22 11:35:34 +0800 +0800">November 22, 2021</span></footer>
+<a class=entry-link aria-label="post link to Hugo Extended Mode on Github Pages" href=https://kassiansun.github.io/posts/hugo-extended-github-pages/></a>
+</article>
+<article class="post-entry tag-entry">
+<header class=entry-header>
+<h2>Hello Word
+</h2>
+</header>
+<section class=entry-content>
+<p>Yes, this is my first post.
+Recently I’m reading &lt;Own Your Tech Career>, the idea of the book is great. Although I don’t know the author personally, we share many same thoughts on technology, career, and life. The most important thing I learned is how to get engaged in communities & build a personal brand. One thing is writing personal blogs, so here it is.
+To be honest, I didn’t create this website by blindly following another guy’s idea....</p>
+</section>
+<footer class=entry-footer><span title="2021-11-22 11:03:54 +0800 +0800">November 22, 2021</span></footer>
+<a class=entry-link aria-label="post link to Hello Word" href=https://kassiansun.github.io/posts/hello-word/></a>
+</article>
 </main>
 <footer class=footer>
 <span>&copy; 2021 <a href=https://kassiansun.github.io/>Kassian Sun</a></span>
