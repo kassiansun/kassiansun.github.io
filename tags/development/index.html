@@ -51,6 +51,18 @@
 </header>
 <article class="post-entry tag-entry">
 <header class=entry-header>
+<h2>Fix GCC 11 Missing Headers on Mac OS Monterey
+</h2>
+</header>
+<section class=entry-content>
+<p>Encountered this issue trying to compile a simple “Hello World” program with gcc-11 from homebrew. The compiler complained about fatal error: _stdio.h: No such file or directory. After some investigation, this was caused by wrong building configuration for gcc:
+$ gcc -v Using built-in specs. COLLECT_GCC=gcc-11 COLLECT_LTO_WRAPPER=/opt/homebrew/Cellar/gcc/11.2.0_3/libexec/gcc/aarch64-apple-darwin21/11/lto-wrapper Target: aarch64-apple-darwin21 Configured with: ../configure --prefix=/opt/homebrew/Cellar/gcc/11.2.0_3 --libdir=/opt/homebrew/Cellar/gcc/11.2.0_3/lib/gcc/11 --disable-nls --enable-checking=release --with-gcc-major-version-only --enable-languages=c,c++,objc,obj-c++,fortran --program-suffix=-11 --with-gmp=/opt/homebrew/opt/gmp --with-mpfr=/opt/homebrew/opt/mpfr --with-mpc=/opt/homebrew/opt/libmpc --with-isl=/opt/homebrew/opt/isl --with-zstd=/opt/homebrew/opt/zstd --with-pkgversion='Homebrew GCC 11.2.0_3' --with-bugurl=https://github.com/Homebrew/homebrew-core/issues --build=aarch64-apple-darwin21 --with-system-zlib --disable-multilib --with-native-system-header-dir=/usr/include --with-sysroot=/Library/Developer/CommandLineTools/SDKs/MacOSX12....</p>
+</section>
+<footer class=entry-footer><span title="2021-12-08 19:10:30 +0800 +0800">December 8, 2021</span></footer>
+<a class=entry-link aria-label="post link to Fix GCC 11 Missing Headers on Mac OS Monterey" href=https://kassiansun.github.io/posts/gcc-missing-headers/></a>
+</article>
+<article class="post-entry tag-entry">
+<header class=entry-header>
 <h2>Quick Start Guide with create-react-app (TypeScript + Eslint + Prettier)
 </h2>
 </header>
