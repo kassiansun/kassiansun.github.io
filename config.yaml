@@ -1,0 +1,14 @@
+baseURL: 'https://kassiansun.github.io/'
+languageCode: 'en-us'
+title: 'Kassian Sun'
+theme: 'PaperMod'
+googleAnalytics: 'UA-213473194-1'
+
+languages:
+  en:
+    languageName: 'English'
+    weight: 1
+    menu:
+      main:
+        - name: About
+          url: /about
