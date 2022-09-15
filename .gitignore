@@ -6,3 +6,4 @@
 hugo.exe
 hugo.darwin
 hugo.linux
+*.swp
