@@ -32,6 +32,14 @@ Copied from source code:
 - Run the main `initTask`'s.
 - Run `main_main`.
 
+### `runtime.sysmon`
+
+`sysmon` is a global worker runs regularly to ensure the system state consistency.
+
+- Check deadlocks.
+- Poll the network every 10ms.
+- Try to force a GC.
+
 ## `runtime.getg`
 
 `runtime.getg` is generated directly at `ir`-level, which means there's no functio definition, but code expansion instead.
