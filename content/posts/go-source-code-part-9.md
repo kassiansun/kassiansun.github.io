@@ -21,7 +21,7 @@ Take `src/runtime/asm_arm.s` as an example:
 - Call `runtime.newproc` for the main function.
 - call `runtime.mstart` to start the M.
 
-## `runtime.osinit`
+### `runtime.osinit`
 
 Take `src/runtime/os_linux.go` as an example:
 
@@ -29,7 +29,7 @@ Take `src/runtime/os_linux.go` as an example:
 - Get the huge page size.
 - Run osArchInit. <- Seems not used.
 
-## `runtime.schedinit`
+### `runtime.schedinit`
 
 - Initialize all the locks.
 - Set up the `g.racectx`.
@@ -58,7 +58,20 @@ Take `src/runtime/os_linux.go` as an example:
 - There should be zero runnable `p`, since this is only a bootstrap process.
 - Start the world.
 
-## `runtime.newproc`
+### `runtime.mstart`
+
+`mstart0` set up the stack info, then calls `runtime.mstart1` to allocate the m:
+
+- Check whether the current `g` is `m`'s scheduling `g0`.
+- Set up the `m.g0`, mostly the same as `newproc`.
+- Init the assembly part with `asminit`, ISA-dependent.
+- Init the thread-level information with `minit`, OS-dependent.
+- If the current `m` is `m0`, spin up an extra `m`, and initialize signals.
+- Call `m.mstartfn`.
+- If it's not `m0`, acquire the `m`'s p.
+- `schedule()`.
+
+## Start a New Goroutine: `runtime.newproc`
 
 In Go, you start a goroutine with the `go` keyword, this compiler will expand this keyword as `runtime.newproc`.
 
@@ -96,11 +109,15 @@ In Go, you start a goroutine with the `go` keyword, this compiler will expand th
 - Try to get a spinning `p`.
 - Start a new `m` to hold the `p`.
 
-## `runtime.schedule`
+## Scheduling Cycle: `runtime.schedule`
 
 Callers: `mstart0`, `gopark`, `goschedguarded/gopreempt_m`, `preemptPark`, `goyield`, `goexit1`, `exitsyscall`.
 
 Let's try to analyze these callers one by one.
+
+### `runtime.mstart0`
+
+See above.
 
 ### `runtime.goschedImpl`
 
@@ -110,21 +127,6 @@ It's a common function to schedule a goroutine:
 - Change `g` status to `_Grunnable`.
 - Detach `g` from the current `m`.
 - Put `g` onto the global run queue.
-- `schedule()`.
-
-### `runtime.mstart0`
-
-It will be called by assembly code from the entry of the binary.
-
-`mstart0` set up the stack info, then calls `runtime.mstart1` to allocate the m:
-
-- Check whether the current `g` is `m`'s scheduling `g0`.
-- Set up the `m.g0`, mostly the same as `newproc`.
-- Init the assembly part with `asminit`, ISA-dependent.
-- Init the thread-level information with `minit`, OS-dependent.
-- If the current `m` is `m0`, spin up an extra `m`, and initialize signals.
-- Call `m.mstartfn`.
-- If it's not `m0`, acquire the `m`'s p.
 - `schedule()`.
 
 ### `runtime.gopark`
