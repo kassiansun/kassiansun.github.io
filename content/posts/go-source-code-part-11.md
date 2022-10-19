@@ -69,6 +69,25 @@ can be obtained from `mspan`. Large objects will be splitted into "oblets".
 
 Goroutines will call `gcAssistAlloc` to assist the GC.
 
+### Memory Barriers
+
+- Code Path: `src/runtime/mbarrier.go`
+
+The memory barriers are code snippets insert around a memory operation.
+[Ref](https://github.com/golang/proposal/blob/master/design/17503-eliminate-rescan.md)
+
+#### SSA
+
+- Code Path: `src/cmd/compile/internal/ssa/writebarrier.go`
+  `ssa.writebarrier` will rewrite the following instructions of a `ssa.Func`:
+- `OpStoreWB`
+- `OpMoveWB`
+- `OpZeroWB`
+
+#### GC Implementation
+
+- Code Path: `src/runtime/mbitmap.go`
+
 ## Sweeping
 
 - Code Path: `src/runtime/mgcsweep.go`
