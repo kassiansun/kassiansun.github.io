@@ -35,23 +35,34 @@ All `go` stacks will be allocated by `stackalloc`. It will return a new `stack` 
 
 `stackfree` will not return the memory to the OS, instead, it just puts the memory back to `stackpool` or `stackLarge`.
 
-## Memory Management with `mheap`
+## Memory Management
+
+- Code Path: `src/runtime/malloc.go`
+
+### `mallocgc`
+
+`mallocgc` will get the `mcache` from the current M, try to allocate small objects on the local `mcache` and large objects
+from the global `mheap`.
+
+### `mheap`
 
 - Code Path: `src/runtime/mheap.go`
 
 `mheap_` is an instance of `mheap` struct, which serves as the main malloc heap.
+The `go` memory allocator is based on [TCMalloc](https://google.github.io/tcmalloc/design.html), it provides thread-local
+cache pool and is more flexible for objects with different sizes (useful for Go's garbage collector).
 
-### `mSpanList`
+#### `mSpanList`
 
 It's not a red-black tree, so querying a free zone is done by iterating through the list with a hint index `freeindex`.
 Other fields are for the GC process.
 
-### `mheap.alloc` and `mheap.allocManual`
+#### `mheap.alloc` and `mheap.allocManual`
 
 The difference is `alloc` will try to `mheap.reclaim` the required number of pages, `allocManual` won't.
 The underlying allocation strategies are handled by `mheap.allocSpan` and controlled by `spanAllocType`.
 
-### `mheap.allocSpan`
+#### `mheap.allocSpan`
 
 `allocSpan` is the main function to allocate a `mspan`
 
@@ -71,9 +82,15 @@ The underlying allocation strategies are handled by `mheap.allocSpan` and contro
 - Initialize the mark and allocation structures if it's a heap allocation. Not for `allocManual`.
 - Do the memory scavenge.
 
-### `mheap.grow`
+#### `mheap.grow`
 
 `grow` will allocate a new memory region from the OS, and track the region internally.
+
+### `mcache`
+
+- Code Path: `src/runtime/mcache.go`
+
+`mcache` is a per-P cache for small objects. Large objects are allocated through `mcache.allocLarge` on `mheap` directly.
 
 ## `pageAlloc`
 
@@ -95,7 +112,7 @@ The underlying allocation strategies are handled by `mheap.allocSpan` and contro
 
 `scavenge` is used to return the physical page back to the OS.
 
-## `pageCache`
+### `pageCache`
 
 - Code Path: `src/runtime/mpagecache.go`
 
