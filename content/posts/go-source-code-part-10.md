@@ -44,6 +44,10 @@ All `go` stacks will be allocated by `stackalloc`. It will return a new `stack` 
 `mallocgc` will get the `mcache` from the current M, try to allocate small objects on the local `mcache` and large objects
 from the global `mheap`.
 
+#### `zerobase`
+
+`zerobase` is the memory address for all zero-sized allocations.
+
 ### `mheap`
 
 - Code Path: `src/runtime/mheap.go`
