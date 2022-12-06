@@ -26,19 +26,19 @@ the context lifecycle.</li></ol><h3 id=the-implementation>The Implementation<a h
 </span></span><span style=display:flex><span>        mutableStateOf(<span style=color:#66d9ef>null</span>)
 </span></span><span style=display:flex><span>    }
 </span></span><span style=display:flex><span>    <span style=color:#75715e>// current context
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>val</span> context = LocalContext.current
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>val</span> context = <span style=color:#a6e22e>LocalContext</span>.current
 </span></span><span style=display:flex><span>    <span style=color:#75715e>// glide execution control
 </span></span></span><span style=display:flex><span><span style=color:#75715e></span>    LaunchedEffect(picUri) {
-</span></span><span style=display:flex><span>        Log.d(<span style=color:#e6db74>&#34;utils&#34;</span>, <span style=color:#e6db74>&#34;loading image: </span><span style=color:#e6db74>$picUri</span><span style=color:#e6db74>&#34;</span>)
+</span></span><span style=display:flex><span>        <span style=color:#a6e22e>Log</span>.d(<span style=color:#e6db74>&#34;utils&#34;</span>, <span style=color:#e6db74>&#34;loading image: </span><span style=color:#e6db74>$picUri</span><span style=color:#e6db74>&#34;</span>)
 </span></span><span style=display:flex><span>        <span style=color:#75715e>// Thanks for the original idea from https://www.youtube.com/channel/UCoNZZLhPuuRteu02rh7bzsw
 </span></span></span><span style=display:flex><span><span style=color:#75715e></span>        <span style=color:#75715e>// Code copied from https://www.youtube.com/watch?v=ktOWiLx83bQ
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>        Glide.with(context).asBitmap().load(picUri)
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>        <span style=color:#a6e22e>Glide</span>.with(context).asBitmap().load(picUri)
 </span></span><span style=display:flex><span>            .into(<span style=color:#66d9ef>object</span> <span style=color:#960050;background-color:#1e0010>: </span><span style=color:#a6e22e>CustomTarget</span>&lt;Bitmap&gt;() {
 </span></span><span style=display:flex><span>                <span style=color:#66d9ef>override</span> <span style=color:#66d9ef>fun</span> <span style=color:#a6e22e>onResourceReady</span>(
 </span></span><span style=display:flex><span>                    resource: Bitmap,
 </span></span><span style=display:flex><span>                    transition: Transition&lt;<span style=color:#66d9ef>in</span> Bitmap&gt;?
 </span></span><span style=display:flex><span>                ) {
-</span></span><span style=display:flex><span>                    Log.d(<span style=color:#e6db74>&#34;utils&#34;</span>, <span style=color:#e6db74>&#34;setting bitmap&#34;</span>)
+</span></span><span style=display:flex><span>                    <span style=color:#a6e22e>Log</span>.d(<span style=color:#e6db74>&#34;utils&#34;</span>, <span style=color:#e6db74>&#34;setting bitmap&#34;</span>)
 </span></span><span style=display:flex><span>                    bitmapState.<span style=color:#66d9ef>value</span> = resource
 </span></span><span style=display:flex><span>                }
 </span></span><span style=display:flex><span>
