@@ -5,11 +5,33 @@ date: 2023-06-16T15:49:24+08:00
 
 ## Install LDAP
 
+Before install ldap, set-up a valid FQDN for your hostname:
+
+- Edit /etc/hostname, for example `void.kassiansun.com`
+- Restart the host
+
+If you've installed ldap before, purge them all:
+
+```bash
+sudo apt-get remove --purge slapd ldap-utils -y
+```
+
+Now we can install the ldap packages:
+
 ```bash
 sudo apt-get install slapd ldap-utils -y
 ```
 
 During the installation, it will prompt to set the default password.
+
+Test that you now have a valid LDAP tree:
+
+```bash
+# Output:
+# dn:
+# namingContexts: dc=kassiansun,dc=com
+ldapsearch -H ldap://localhost -x -LLL -s base -b "" namingContexts
+```
 
 ## Clean-Up Old apache2 and php installation
 
