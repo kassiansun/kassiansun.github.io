@@ -131,7 +131,7 @@ It's a common function to schedule a goroutine:
 
 ### `runtime.gopark`
 
-See the [last post](https://kassiansun.github.io/posts/go-source-code-part-8/).
+See the [last post](/posts/go-source-code-part-8/).
 
 ### `runtime.gopreempt_m`, `runtime.goschedguarded`
 
