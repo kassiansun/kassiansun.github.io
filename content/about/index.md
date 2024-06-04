@@ -29,10 +29,9 @@ I like web technologies, they're built upon openminded and collaborative guys. P
 
 ### Tooling Stack
 
-- OneNote - My main knowledge base & journaling tool.
-- Muse - Semi-structured & graph-structured notes.
+- Zotero - My personal knowledge base.
+- Obsidian - I use Obsidian to store all Zettelkasten notes.
 - Procreate - Free-style notes.
-- Microsoft To Do - Planning & executing tools.
 
 ### Hobbies
 
