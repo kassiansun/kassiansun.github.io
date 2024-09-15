@@ -1,25 +1,369 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Go on Kassian Sun</title><link>https://blog.kassiansun.com/tags/go/</link><description>Recent content in Go on Kassian Sun</description><generator>Hugo -- 0.128.2</generator><language>en</language><lastBuildDate>Wed, 23 Nov 2022 16:51:25 +0800</lastBuildDate><atom:link href="https://blog.kassiansun.com/tags/go/index.xml" rel="self" type="application/rss+xml"/><item><title>Go Runtime Implementations: Map</title><link>https://blog.kassiansun.com/posts/go-source-code-part-19/</link><pubDate>Wed, 23 Nov 2022 16:51:25 +0800</pubDate><guid>https://blog.kassiansun.com/posts/go-source-code-part-19/</guid><description>Code Path: src/runtime/map.go makemap Each hmap has a hash0 as seed hash. When the compiler generates the typing information for a map, the hasher function will be calculated with genhash function (code path: src/cmd/compile/internal/reflectdata/alg.go).
-If the map is not escaped, the hmap will be allocated by the compiler on the stack.
-Then makemap will allocate an array of bucket, the type of bucket is generated at compiling stage by MapBucketType (code path: src/cmd/compile/internal/reflectdata/reflect.</description></item><item><title>Go Runtime Implementations: Timer Scheduling</title><link>https://blog.kassiansun.com/posts/go-source-code-part-18/</link><pubDate>Mon, 07 Nov 2022 08:49:37 +0800</pubDate><guid>https://blog.kassiansun.com/posts/go-source-code-part-18/</guid><description>Code Path: src/runtime/time.go time.startTimer (implemented as addtimer) Each p has a timers list. When a user is adding a new timer, it will first try to clean up the timers list, then adds the new timer. Each timers list is a heap sorted by timer.when, and will be updated during add/delete timers.
-cleantimers cleantimers only checks the head of the timers list.
-Check if it&amp;rsquo;s timerDeleted, delete it from the timers list, and update p&amp;rsquo;s timer0When.</description></item><item><title>Go Runtime Implementations: Network Polling</title><link>https://blog.kassiansun.com/posts/go-source-code-part-17/</link><pubDate>Sat, 05 Nov 2022 08:56:11 +0800</pubDate><guid>https://blog.kassiansun.com/posts/go-source-code-part-17/</guid><description>Code Path: src/runtime/netpoll.go Network polling is platform-dependent, the following is of BSD family operating systems (based on kqueue).
-netpollinit Initialize a kqueue descriptor, and set CLOSEXEC flag on it. Initialize a non-blocking pipe, and use the reader/writer for netpollBreak. netpollBreak will try to write to the pipe and interrupt the kevent. netpoll netpoll is used to check the connections and return a list of g ready to run. It can block for delay ns at most.</description></item><item><title>Go Runtime Implementations: Select</title><link>https://blog.kassiansun.com/posts/go-source-code-part-16/</link><pubDate>Fri, 04 Nov 2022 14:14:30 +0800</pubDate><guid>https://blog.kassiansun.com/posts/go-source-code-part-16/</guid><description>Code Path: src/runtime/select.go IR stage IR will walk a select statement and generate the code accordingly:
-If there&amp;rsquo;s no case, replace the select statement with runtime.block, the current goroutine will be blocked forever. If there&amp;rsquo;s only one case, extract the send or receive operation from the case statement. Otherwise, convert case values to addresses. If there&amp;rsquo;s only one case with one default, replace it with non-block calls selectnbsend or selectnbrecv.</description></item><item><title>Go Runtime Implementations: Slices</title><link>https://blog.kassiansun.com/posts/go-source-code-part-15/</link><pubDate>Fri, 04 Nov 2022 09:21:06 +0800</pubDate><guid>https://blog.kassiansun.com/posts/go-source-code-part-15/</guid><description>Code Path: src/runtime/slice.go makeslicecopy makeslicecopy is used for IR patterns like m = OMAKESLICE([]T, x); OCOPY(m, s), IR will rewrite this specific order of code path and replace it with OMAKESLICECOPY. If the elements has no pointer, SSA will generate code to do a mallocgc and memmove. Otherwise, the code will be expanded to makeslicecopy:
-Check the length of the slice to copy to. Do mallocgc Do memmove makeslice and `makeslice641 makeslice is used for make(slice, len, cap) statements, if cap is missing, by default it will be the same as len.</description></item><item><title>Go Runtime Implementations: Interfaces</title><link>https://blog.kassiansun.com/posts/go-source-code-part-14/</link><pubDate>Thu, 27 Oct 2022 10:16:17 +0800</pubDate><guid>https://blog.kassiansun.com/posts/go-source-code-part-14/</guid><description>Static Definition and Initialization Code Path: src/runtime/iface.go In proc.go, itabsinit will init the itabTable with the current activeModules information. The itabsinit function will read the itablinks from each module and add them to the global hash table.
-During the runtime, the getitab function will also build more items dynamically and fill the hash table accordingly.
-itablinks was produced for each module during the linking stage, and contains an array of itab.</description></item><item><title>Go Runtime Implementations: Typing System</title><link>https://blog.kassiansun.com/posts/go-source-code-part-13/</link><pubDate>Tue, 25 Oct 2022 17:59:51 +0800</pubDate><guid>https://blog.kassiansun.com/posts/go-source-code-part-13/</guid><description>Compiling Code Path: src/cmd/compile/internal/ir/expr.go During the IR stage, each expression will get type info, it&amp;rsquo;s defined as miniExpr and can be assigned a types.Type value.
-Static Typing: types2 Code Path: src/cmd/compile/internal/types2 types and `types2 Conversion Code Path: src/cmd/compile/internal/noder/types.go Currently, both packages are in use, but much logic is being migrated to types2 package. types2 package was introduced as part of go generic features and has a better code structure than the old types package.</description></item><item><title>Go Runtime Implementations: Garbage Collection</title><link>https://blog.kassiansun.com/posts/go-source-code-part-11/</link><pubDate>Tue, 18 Oct 2022 14:17:39 +0800</pubDate><guid>https://blog.kassiansun.com/posts/go-source-code-part-11/</guid><description>Ref Garbage Collector Code Path: src/runtime/mgc.go gcinit gcinit runs after almost everything set up in schedinit.
-Set sweepDrainedMask Initialize gcController with GOGC (for GC percentage control) and GOMEMLIMIT (for memory limits). Initialize work semaphores. gcenable gcenable happens in the main goroutine, right after runtime_inittask.
-Start bgsweep Start bgscavenge GC GC runs a full garbage collection. Each run will finish the current GC cycle: sweep termination, mark, mark termination, and sweep.</description></item><item><title>Go Runtime Implementations: Stack and Memory Management</title><link>https://blog.kassiansun.com/posts/go-source-code-part-10/</link><pubDate>Sun, 16 Oct 2022 15:48:13 +0800</pubDate><guid>https://blog.kassiansun.com/posts/go-source-code-part-10/</guid><description>Stack Management Code Path: src/runtime/stack.go Stack pools are initialized before mheap_, because we don&amp;rsquo;t allocate any memory during this stage. Right after the stack pools initialized, the mheap_ will be initialized so later stack allocation is possible.
-stackpool stackpool is managed by the &amp;ldquo;order&amp;rdquo; (based on the ratio of stack size and _FixedStack) of the stack, each order of stack has its own stack pool. In stackinit, the stack pool will be initialized right after moduledataverify.</description></item><item><title>Go Runtime Implementations: Scheduling</title><link>https://blog.kassiansun.com/posts/go-source-code-part-9/</link><pubDate>Fri, 14 Oct 2022 18:31:51 +0800</pubDate><guid>https://blog.kassiansun.com/posts/go-source-code-part-9/</guid><description>Code Path: src/runtime/proc.go Start-Up Process of a Go program. Take src/runtime/asm_arm.s as an example:
-Take the address of g0 and m0. Set up m.g0 and g.m. Create istack. Do runtime check. Save argc and argv. Call runtime.osinit. Call runtime.schedinit. Call runtime.newproc for the main function. call runtime.mstart to start the M. runtime.osinit Take src/runtime/os_linux.go as an example:
-Get the number of processors. This is done by making a syscall SYS_sched_getaffinity.</description></item><item><title>Go Runtime Implementations: Goroutines</title><link>https://blog.kassiansun.com/posts/go-source-code-part-8/</link><pubDate>Wed, 12 Oct 2022 14:42:48 +0800</pubDate><guid>https://blog.kassiansun.com/posts/go-source-code-part-8/</guid><description>Preface Code path: src/runtime/proc.go Data structures are defined under src/runtime/runtime2.go. Concepts Copied from source code:
-// G - goroutine. // M - worker thread, or machine. // P - processor, a resource that is required to execute Go code. // M must have an associated P to execute Go code, however it can be // blocked or in a syscall w/o an associated P. main Set up stack size. Fork a new m and run the sysmon function, except the wasm platform.</description></item><item><title>Go Runtime Implementations: Channel</title><link>https://blog.kassiansun.com/posts/go-source-code-part-7/</link><pubDate>Thu, 29 Sep 2022 11:24:26 +0800</pubDate><guid>https://blog.kassiansun.com/posts/go-source-code-part-7/</guid><description>Path: src/runtime/chan.go Compilation When you make a chan with make function, the compiler will expand the expression to the makechan implementation. The actual expansion happens at cmd/compile/internal/walk/expr.go. The runtime will determine whether to use makechan or makechan64.
-Type Definitions type _type _type is used as the internal representation of a go type. The same structure is defined multiple times across the go runtime. _type stores the following fields:
-type chantype makechan only uses chantype.</description></item><item><title>Travesal Through The Go Compiler, Part 6</title><link>https://blog.kassiansun.com/posts/go-source-code-part-6/</link><pubDate>Tue, 20 Sep 2022 10:39:15 +0800</pubDate><guid>https://blog.kassiansun.com/posts/go-source-code-part-6/</guid><description>ssagen.Compile Build SSA for the ir.Func (buildssa) Check ssaDump and set the dump flag. Initialize ssagen.state. Push the line number or the parent&amp;rsquo;s line number (if it&amp;rsquo;s missing) to the stack. Set up ssagen.state flags from ir.Func information. Set up an empty ssagen.ssafn with ir.Func and ABI information. Allocate the starting block for the current ssa.Func. Check open-coded defers. &amp;lt;- What&amp;rsquo;s this? Do ABIAnalyze, get the abi.ABIParamResultInfo of function in/out parameters.</description></item><item><title>Travesal Through The Go Compiler, Part 5</title><link>https://blog.kassiansun.com/posts/go-source-code-part-5/</link><pubDate>Mon, 19 Sep 2022 10:54:34 +0800</pubDate><guid>https://blog.kassiansun.com/posts/go-source-code-part-5/</guid><description>irgen.generate Check each file&amp;rsquo;s pragma list and DeclList. Generate ir.Decl for type declarations. Generate ir.Decl for other declarations. Process later functions, this step is for the same purpose as type check. Type-check CallExpr again. Check missing function bodies. Build generic instantiations. It scans calls and generated needed methods. Remove all generic Decl&amp;rsquo;s. After irgen.generate, g.target.Decls will be the final Decl&amp;rsquo;s to generate.
-enqueueFunc and compileFunctions This step is the compile step of cmd/compile, it happens after type checking and IR generation.</description></item><item><title>Travesal Through The Go Compiler, Part 4</title><link>https://blog.kassiansun.com/posts/go-source-code-part-4/</link><pubDate>Sun, 18 Sep 2022 14:09:58 +0800</pubDate><guid>https://blog.kassiansun.com/posts/go-source-code-part-4/</guid><description>noder.LoadPackage Parsing noder.LoadPackage will call syntax.Parse to generate the syntax tree of all package files.
-Initialize a compile/internal/syntax.scanner Advance scanner to the next token. Start parsing. Check the package declaration first, and take the package name from the parsed pragma. Note that the parser is expecting a ; token, but this is automatically generated at the scanner, so users don&amp;rsquo;t have to write the ;. And parsing errors will not always abort the parser loop.</description></item><item><title>Travesal Through The Go Compiler, Part 3</title><link>https://blog.kassiansun.com/posts/go-source-code-part-3/</link><pubDate>Sat, 17 Sep 2022 09:29:52 +0800</pubDate><guid>https://blog.kassiansun.com/posts/go-source-code-part-3/</guid><description>BuildToolchain BuildToolchain is initialized as noToolchain{} by default, then it&amp;rsquo;s set dynamically to gccgo or gc. Both implementations are wrappers around the binary toolchains installed on the machine. For gc, the delegations are as follows:
-BuildToolchain.gc - base.Tool(&amp;quot;compile&amp;quot;) BuildToolchain.cc - base.Tool(&amp;quot;cgo&amp;quot;). Actually cgo has been executed before the compile and cfiles has been cleared, so BuildToolchain.cc should never be called and it always returns an error. BuildToolchain.asm - base.Tool(&amp;quot;asm&amp;quot;) BuildToolchain.pack - base.</description></item><item><title>Travesal Through The Go Compiler, Part 2</title><link>https://blog.kassiansun.com/posts/go-source-code-part-2/</link><pubDate>Fri, 16 Sep 2022 15:16:23 +0800</pubDate><guid>https://blog.kassiansun.com/posts/go-source-code-part-2/</guid><description>Builder.build Builder.build generate an archive for a single package.
-Builder.build gets building information from two sources: internal/cfg package. It contains some global variables saving build flags. load.Package. It contains information for the current building package. Builder.build will build a need flag, finish the step and uncheck the finished bits one by one. Set up caching information by action, its package, and package&amp;rsquo;s target. Set up objects output directory. Setup cgo cache &amp;amp; vet cache.</description></item><item><title>Traversal Through The Go Compiler, Part 1</title><link>https://blog.kassiansun.com/posts/go-source-code-part-1/</link><pubDate>Thu, 15 Sep 2022 08:48:31 +0800</pubDate><guid>https://blog.kassiansun.com/posts/go-source-code-part-1/</guid><description>Set Up the Environment vim-go doesn&amp;rsquo;t support travesal through the go source code, so I switch to vscode and it works out of box (with Go plugin &amp;amp;&amp;amp; gopls installed).
-Start Point (go run) File: src/cmd/go/main.go Declaration: run.CmdRun Function: run.runRun Key data structures: build.Context work.Builder load.Package work.Action The runRun function will go through several stages:
-Check shouldUseOutsideModuleMode. This procedure is used by go run cmd@version work.BuildInit. This will setup the build context: Initialize modload module.</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Go on Kassian Sun</title><link>https://blog.kassiansun.com/tags/go/</link><description>Recent content in Go on Kassian Sun</description><generator>Hugo -- 0.134.2</generator><language>en</language><lastBuildDate>Wed, 23 Nov 2022 16:51:25 +0800</lastBuildDate><atom:link href="https://blog.kassiansun.com/tags/go/index.xml" rel="self" type="application/rss+xml"/><item><title>Go Runtime Implementations: Map</title><link>https://blog.kassiansun.com/posts/go-source-code-part-19/</link><pubDate>Wed, 23 Nov 2022 16:51:25 +0800</pubDate><guid>https://blog.kassiansun.com/posts/go-source-code-part-19/</guid><description>&lt;ul>
+&lt;li>Code Path: &lt;code>src/runtime/map.go&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;h2 id="makemap">&lt;code>makemap&lt;/code>&lt;/h2>
+&lt;p>Each &lt;code>hmap&lt;/code> has a &lt;code>hash0&lt;/code> as seed hash. When the compiler generates the typing information for a map, the &lt;code>hasher&lt;/code>
+function will be calculated with &lt;code>genhash&lt;/code> function (code path: &lt;code>src/cmd/compile/internal/reflectdata/alg.go&lt;/code>).&lt;/p>
+&lt;p>If the map is not escaped, the &lt;code>hmap&lt;/code> will be allocated by the compiler on the stack.&lt;/p>
+&lt;p>Then &lt;code>makemap&lt;/code> will allocate an array of &lt;code>bucket&lt;/code>, the type of &lt;code>bucket&lt;/code> is generated at compiling stage by &lt;code>MapBucketType&lt;/code>
+(code path: &lt;code>src/cmd/compile/internal/reflectdata/reflect.go&lt;/code>).&lt;/p></description></item><item><title>Go Runtime Implementations: Timer Scheduling</title><link>https://blog.kassiansun.com/posts/go-source-code-part-18/</link><pubDate>Mon, 07 Nov 2022 08:49:37 +0800</pubDate><guid>https://blog.kassiansun.com/posts/go-source-code-part-18/</guid><description>&lt;ul>
+&lt;li>Code Path: &lt;code>src/runtime/time.go&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;h2 id="timestarttimer-implemented-as-addtimer">&lt;code>time.startTimer&lt;/code> (implemented as &lt;code>addtimer&lt;/code>)&lt;/h2>
+&lt;p>Each &lt;code>p&lt;/code> has a &lt;code>timers&lt;/code> list. When a user is adding a new timer, it will first try to clean up the &lt;code>timers&lt;/code> list,
+then adds the new timer. Each &lt;code>timers&lt;/code> list is a heap sorted by &lt;code>timer.when&lt;/code>, and will be updated during add/delete timers.&lt;/p>
+&lt;h3 id="cleantimers">&lt;code>cleantimers&lt;/code>&lt;/h3>
+&lt;p>&lt;code>cleantimers&lt;/code> only checks the head of the &lt;code>timers&lt;/code> list.&lt;/p>
+&lt;ul>
+&lt;li>Check if it&amp;rsquo;s &lt;code>timerDeleted&lt;/code>, delete it from the &lt;code>timers&lt;/code> list, and update &lt;code>p&lt;/code>&amp;rsquo;s &lt;code>timer0When&lt;/code>.&lt;/li>
+&lt;li>Check if it&amp;rsquo;s &lt;code>timerModifiedEarlier&lt;/code> or &lt;code>timerModifiedLater&lt;/code>, delete it from the &lt;code>timers&lt;/code> list and add it back to put it at the right position in the list.&lt;/li>
+&lt;/ul>
+&lt;h3 id="doaddtimer">&lt;code>doaddtimer&lt;/code>&lt;/h3>
+&lt;p>&lt;code>doaddtimer&lt;/code> link the time to the &lt;code>p&lt;/code>&amp;rsquo;s &lt;code>timers&lt;/code> list, and sift up the heap to put it in the right position.&lt;/p></description></item><item><title>Go Runtime Implementations: Network Polling</title><link>https://blog.kassiansun.com/posts/go-source-code-part-17/</link><pubDate>Sat, 05 Nov 2022 08:56:11 +0800</pubDate><guid>https://blog.kassiansun.com/posts/go-source-code-part-17/</guid><description>&lt;ul>
+&lt;li>Code Path: &lt;code>src/runtime/netpoll.go&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;p>Network polling is platform-dependent, the following is of BSD family operating systems (based on &lt;a href="https://www.freebsd.org/cgi/man.cgi?query=kqueue&amp;apropos=0&amp;sektion=2&amp;manpath=FreeBSD+14.0-current&amp;arch=default&amp;format=html">kqueue&lt;/a>).&lt;/p>
+&lt;h2 id="netpollinit">&lt;code>netpollinit&lt;/code>&lt;/h2>
+&lt;ul>
+&lt;li>Initialize a &lt;code>kqueue&lt;/code> descriptor, and set &lt;code>CLOSEXEC&lt;/code> flag on it.&lt;/li>
+&lt;li>Initialize a non-blocking pipe, and use the reader/writer for &lt;code>netpollBreak&lt;/code>.
+&lt;ul>
+&lt;li>&lt;code>netpollBreak&lt;/code> will try to write to the pipe and interrupt the &lt;code>kevent&lt;/code>.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h2 id="netpoll">&lt;code>netpoll&lt;/code>&lt;/h2>
+&lt;p>&lt;code>netpoll&lt;/code> is used to check the connections and return a list of &lt;code>g&lt;/code> ready to run. It can block for &lt;code>delay&lt;/code> ns at most.
+The &lt;code>delay&lt;/code> parameter will be passed to &lt;code>kevent&lt;/code> syscall.&lt;/p></description></item><item><title>Go Runtime Implementations: Select</title><link>https://blog.kassiansun.com/posts/go-source-code-part-16/</link><pubDate>Fri, 04 Nov 2022 14:14:30 +0800</pubDate><guid>https://blog.kassiansun.com/posts/go-source-code-part-16/</guid><description>&lt;ul>
+&lt;li>Code Path: &lt;code>src/runtime/select.go&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;h2 id="ir-stage">IR stage&lt;/h2>
+&lt;p>IR will walk a &lt;code>select&lt;/code> statement and generate the code accordingly:&lt;/p>
+&lt;ul>
+&lt;li>If there&amp;rsquo;s no &lt;code>case&lt;/code>, replace the select statement with &lt;code>runtime.block&lt;/code>, the current goroutine will be blocked forever.&lt;/li>
+&lt;li>If there&amp;rsquo;s only one &lt;code>case&lt;/code>, extract the send or receive operation from the &lt;code>case&lt;/code> statement.&lt;/li>
+&lt;li>Otherwise, convert &lt;code>case&lt;/code> values to addresses.&lt;/li>
+&lt;li>If there&amp;rsquo;s only one &lt;code>case&lt;/code> with one &lt;code>default&lt;/code>, replace it with non-block calls &lt;code>selectnbsend&lt;/code> or &lt;code>selectnbrecv&lt;/code>.&lt;/li>
+&lt;li>Generate a select statement with the list of &lt;code>send&lt;/code> and &lt;code>recv&lt;/code> cases, and run &lt;code>selectgo&lt;/code> on it.&lt;/li>
+&lt;li>Run the &lt;code>case&lt;/code> or &lt;code>default&lt;/code> based on the returned index of &lt;code>selectgo&lt;/code>.&lt;/li>
+&lt;/ul>
+&lt;h2 id="selectgo">&lt;code>selectgo&lt;/code>&lt;/h2>
+&lt;p>&lt;code>selectgo&lt;/code> takes two major arguments: a list of &lt;code>scase&lt;/code> and a list of the orders of &lt;code>recv/send&lt;/code>.
+It returns the pos of &lt;code>case&lt;/code> to execute.&lt;/p></description></item><item><title>Go Runtime Implementations: Slices</title><link>https://blog.kassiansun.com/posts/go-source-code-part-15/</link><pubDate>Fri, 04 Nov 2022 09:21:06 +0800</pubDate><guid>https://blog.kassiansun.com/posts/go-source-code-part-15/</guid><description>&lt;ul>
+&lt;li>Code Path: &lt;code>src/runtime/slice.go&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;h2 id="makeslicecopy">&lt;code>makeslicecopy&lt;/code>&lt;/h2>
+&lt;p>&lt;code>makeslicecopy&lt;/code> is used for IR patterns like &lt;code>m = OMAKESLICE([]T, x); OCOPY(m, s)&lt;/code>, IR will rewrite
+this specific order of code path and replace it with &lt;code>OMAKESLICECOPY&lt;/code>. If the elements has no pointer,
+SSA will generate code to do a &lt;code>mallocgc&lt;/code> and &lt;code>memmove&lt;/code>. Otherwise, the code will be expanded to &lt;code>makeslicecopy&lt;/code>:&lt;/p>
+&lt;ul>
+&lt;li>Check the length of the slice to copy to.&lt;/li>
+&lt;li>Do &lt;code>mallocgc&lt;/code>&lt;/li>
+&lt;li>Do &lt;code>memmove&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;h2 id="makeslice-and-makeslice641">&lt;code>makeslice&lt;/code> and `makeslice641&lt;/h2>
+&lt;p>&lt;code>makeslice&lt;/code> is used for &lt;code>make(slice, len, cap)&lt;/code> statements, if &lt;code>cap&lt;/code> is missing, by default it will be the same as &lt;code>len&lt;/code>.&lt;/p></description></item><item><title>Go Runtime Implementations: Interfaces</title><link>https://blog.kassiansun.com/posts/go-source-code-part-14/</link><pubDate>Thu, 27 Oct 2022 10:16:17 +0800</pubDate><guid>https://blog.kassiansun.com/posts/go-source-code-part-14/</guid><description>&lt;h2 id="static-definition-and-initialization">Static Definition and Initialization&lt;/h2>
+&lt;ul>
+&lt;li>Code Path: &lt;code>src/runtime/iface.go&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;p>In &lt;code>proc.go&lt;/code>, &lt;code>itabsinit&lt;/code> will init the &lt;code>itabTable&lt;/code> with the current &lt;code>activeModules&lt;/code> information.
+The &lt;code>itabsinit&lt;/code> function will read the &lt;code>itablinks&lt;/code> from each module and add them to the global hash table.&lt;/p>
+&lt;p>During the runtime, the &lt;code>getitab&lt;/code> function will also build more items dynamically and fill the hash table accordingly.&lt;/p>
+&lt;p>&lt;code>itablinks&lt;/code> was produced for each module during the linking stage, and contains an array of &lt;code>itab&lt;/code>.
+&lt;code>itab&lt;/code> is generated by writeITab function (code path: &lt;code>cmd/compile/internal/reflectdata/reflect.go&lt;/code>),
+used to store the type link between a concrete type (&lt;code>_type&lt;/code> field) implementing an interface (&lt;code>inter&lt;/code> field).
+If &lt;code>_type&lt;/code> doesn&amp;rsquo;t implement &lt;code>inter&lt;/code>, &lt;code>fun&lt;/code> will be empty; else it will save the methods of &lt;code>_type&lt;/code> implementing &lt;code>inter&lt;/code> (not all methods of &lt;code>_type&lt;/code>).&lt;/p></description></item><item><title>Go Runtime Implementations: Typing System</title><link>https://blog.kassiansun.com/posts/go-source-code-part-13/</link><pubDate>Tue, 25 Oct 2022 17:59:51 +0800</pubDate><guid>https://blog.kassiansun.com/posts/go-source-code-part-13/</guid><description>&lt;h2 id="compiling">Compiling&lt;/h2>
+&lt;ul>
+&lt;li>Code Path: &lt;code>src/cmd/compile/internal/ir/expr.go&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;p>During the IR stage, each expression will get type info, it&amp;rsquo;s defined as &lt;code>miniExpr&lt;/code> and can be assigned a &lt;code>types.Type&lt;/code> value.&lt;/p>
+&lt;h2 id="static-typing-types2">Static Typing: &lt;code>types2&lt;/code>&lt;/h2>
+&lt;ul>
+&lt;li>Code Path: &lt;code>src/cmd/compile/internal/types2&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;h3 id="types-and-types2">&lt;code>types&lt;/code> and `types2&lt;/h3>
+&lt;ul>
+&lt;li>Conversion Code Path: &lt;code>src/cmd/compile/internal/noder/types.go&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;p>Currently, both packages are in use, but much logic is being migrated to &lt;code>types2&lt;/code> package.
+&lt;code>types2&lt;/code> package was introduced as part of &lt;code>go&lt;/code> generic features and has a better code structure than the old &lt;code>types&lt;/code> package.&lt;/p></description></item><item><title>Go Runtime Implementations: Garbage Collection</title><link>https://blog.kassiansun.com/posts/go-source-code-part-11/</link><pubDate>Tue, 18 Oct 2022 14:17:39 +0800</pubDate><guid>https://blog.kassiansun.com/posts/go-source-code-part-11/</guid><description>&lt;ul>
+&lt;li>&lt;a href="https://go.dev/doc/gc-guide">Ref&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h2 id="garbage-collector">Garbage Collector&lt;/h2>
+&lt;ul>
+&lt;li>Code Path: &lt;code>src/runtime/mgc.go&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;h3 id="gcinit">&lt;code>gcinit&lt;/code>&lt;/h3>
+&lt;p>&lt;code>gcinit&lt;/code> runs after almost everything set up in &lt;code>schedinit&lt;/code>.&lt;/p>
+&lt;ul>
+&lt;li>Set &lt;code>sweepDrainedMask&lt;/code>&lt;/li>
+&lt;li>Initialize &lt;code>gcController&lt;/code> with &lt;code>GOGC&lt;/code> (for GC percentage control) and &lt;code>GOMEMLIMIT&lt;/code> (for memory limits).&lt;/li>
+&lt;li>Initialize &lt;code>work&lt;/code> semaphores.&lt;/li>
+&lt;/ul>
+&lt;h3 id="gcenable">&lt;code>gcenable&lt;/code>&lt;/h3>
+&lt;p>&lt;code>gcenable&lt;/code> happens in the &lt;code>main&lt;/code> goroutine, right after &lt;code>runtime_inittask&lt;/code>.&lt;/p>
+&lt;ul>
+&lt;li>Start &lt;code>bgsweep&lt;/code>&lt;/li>
+&lt;li>Start &lt;code>bgscavenge&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;h3 id="gc">&lt;code>GC&lt;/code>&lt;/h3>
+&lt;p>&lt;code>GC&lt;/code> runs a full garbage collection. Each run will finish the current GC cycle: sweep termination, mark, mark termination, and sweep.
+Then it will start a new GC cycle. Note that GC cycles can move forward to more than &lt;code>N+1&lt;/code>.&lt;/p></description></item><item><title>Go Runtime Implementations: Stack and Memory Management</title><link>https://blog.kassiansun.com/posts/go-source-code-part-10/</link><pubDate>Sun, 16 Oct 2022 15:48:13 +0800</pubDate><guid>https://blog.kassiansun.com/posts/go-source-code-part-10/</guid><description>&lt;h2 id="stack-management">Stack Management&lt;/h2>
+&lt;ul>
+&lt;li>Code Path: &lt;code>src/runtime/stack.go&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;p>Stack pools are initialized before &lt;code>mheap_&lt;/code>, because we don&amp;rsquo;t allocate any memory during this stage.
+Right after the stack pools initialized, the &lt;code>mheap_&lt;/code> will be initialized so later stack allocation is possible.&lt;/p>
+&lt;h3 id="stackpool">&lt;code>stackpool&lt;/code>&lt;/h3>
+&lt;p>&lt;code>stackpool&lt;/code> is managed by the &amp;ldquo;order&amp;rdquo; (based on the ratio of stack size and &lt;code>_FixedStack&lt;/code>) of the stack, each order of stack has its own stack pool.
+In &lt;code>stackinit&lt;/code>, the stack pool will be initialized right after &lt;code>moduledataverify&lt;/code>.&lt;/p></description></item><item><title>Go Runtime Implementations: Scheduling</title><link>https://blog.kassiansun.com/posts/go-source-code-part-9/</link><pubDate>Fri, 14 Oct 2022 18:31:51 +0800</pubDate><guid>https://blog.kassiansun.com/posts/go-source-code-part-9/</guid><description>&lt;ul>
+&lt;li>Code Path: &lt;code>src/runtime/proc.go&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;h2 id="start-up-process-of-a-go-program">Start-Up Process of a Go program.&lt;/h2>
+&lt;p>Take &lt;code>src/runtime/asm_arm.s&lt;/code> as an example:&lt;/p>
+&lt;ul>
+&lt;li>Take the address of &lt;code>g0&lt;/code> and &lt;code>m0&lt;/code>.&lt;/li>
+&lt;li>Set up &lt;code>m.g0&lt;/code> and &lt;code>g.m&lt;/code>.&lt;/li>
+&lt;li>Create &lt;code>istack&lt;/code>.&lt;/li>
+&lt;li>Do runtime check.&lt;/li>
+&lt;li>Save &lt;code>argc&lt;/code> and &lt;code>argv&lt;/code>.&lt;/li>
+&lt;li>Call &lt;code>runtime.osinit&lt;/code>.&lt;/li>
+&lt;li>Call &lt;code>runtime.schedinit&lt;/code>.&lt;/li>
+&lt;li>Call &lt;code>runtime.newproc&lt;/code> for the main function.&lt;/li>
+&lt;li>call &lt;code>runtime.mstart&lt;/code> to start the M.&lt;/li>
+&lt;/ul>
+&lt;h3 id="runtimeosinit">&lt;code>runtime.osinit&lt;/code>&lt;/h3>
+&lt;p>Take &lt;code>src/runtime/os_linux.go&lt;/code> as an example:&lt;/p>
+&lt;ul>
+&lt;li>Get the number of processors. This is done by making a syscall &lt;code>SYS_sched_getaffinity&lt;/code>.&lt;/li>
+&lt;li>Get the huge page size.&lt;/li>
+&lt;li>Run osArchInit. &amp;lt;- Seems not used.&lt;/li>
+&lt;/ul>
+&lt;h3 id="runtimeschedinit">&lt;code>runtime.schedinit&lt;/code>&lt;/h3>
+&lt;ul>
+&lt;li>Initialize all the locks.&lt;/li>
+&lt;li>Set up the &lt;code>g.racectx&lt;/code>.&lt;/li>
+&lt;li>Stop the world.&lt;/li>
+&lt;li>&lt;code>moduledataverify&lt;/code>. Defined in &lt;code>src/runtime/symtab.go&lt;/code>, it will check &lt;code>moduledata&lt;/code>&amp;rsquo;s binary info.&lt;/li>
+&lt;li>&lt;code>stackinit&lt;/code>. Defined in &lt;code>src/runtime/stack.go&lt;/code>, it will setup the global stack pool, all stacks will be allocated by it.&lt;/li>
+&lt;li>&lt;code>mallocinit&lt;/code>. Defined in &lt;code>src/runtime/malloc.go&lt;/code>, it will initialize the memory allocator used by Go.&lt;/li>
+&lt;li>&lt;code>cpuinit&lt;/code>. Set up the &lt;code>internal/cpu&lt;/code> information.&lt;/li>
+&lt;li>&lt;code>alginit&lt;/code>. Defined in &lt;code>src/runtime/alg.go&lt;/code>, set up the CPU instructions that will be used by some internal algorithms, depending on &lt;code>cpuinit&lt;/code>.&lt;/li>
+&lt;li>&lt;code>fastrandinit&lt;/code>.&lt;/li>
+&lt;li>Initialize the &lt;code>g0.m&lt;/code> with &lt;code>mcommoninit&lt;/code>.&lt;/li>
+&lt;li>&lt;code>modulesinit&lt;/code>. Defined in &lt;code>src/runtime/symtab.go&lt;/code>, initialize the dynamic loaded modules.&lt;/li>
+&lt;li>&lt;code>typelinksinit&lt;/code>. Defined in &lt;code>src/runtime/type.go&lt;/code>, initialized the dynamic-loaded module type informations.&lt;/li>
+&lt;li>&lt;code>itabsinit&lt;/code>. Defined in &lt;code>src/runtime/iface.go&lt;/code>, update &lt;code>itabTable&lt;/code> with the dynamic-loaded modules.&lt;/li>
+&lt;li>&lt;code>stkobjinit&lt;/code>. Defined in &lt;code>src/runtime/stkframe.go&lt;/code>, this will set up &lt;code>methodValueCallFrameObjs&lt;/code>, used by later GC module.&lt;/li>
+&lt;li>Save the signal mask as &lt;code>initSigMask&lt;/code>.&lt;/li>
+&lt;li>Parse &lt;code>argv&lt;/code>. Defined in &lt;code>src/runtime/runtime1.go&lt;/code>.&lt;/li>
+&lt;li>Parse environment variables.&lt;/li>
+&lt;li>&lt;code>parsedebugvars&lt;/code>. Defined in &lt;code>src/runtime/runtime1.go&lt;/code>.&lt;/li>
+&lt;li>&lt;code>gcinit&lt;/code>.&lt;/li>
+&lt;li>Set up the number of processors, and trim it accordingly with &lt;code>procresize&lt;/code>:
+&lt;ul>
+&lt;li>Grow &lt;code>allp&lt;/code> as necessary.&lt;/li>
+&lt;li>Initialize all the &lt;code>p&lt;/code>&amp;rsquo;s of &lt;code>allp&lt;/code>.&lt;/li>
+&lt;li>Release old &lt;code>p&lt;/code>&amp;rsquo;s.&lt;/li>
+&lt;li>Track the idle and runnable &lt;code>p&lt;/code>, and return the runnable &lt;code>p&lt;/code>&amp;rsquo;s.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>There should be zero runnable &lt;code>p&lt;/code>, since this is only a bootstrap process.&lt;/li>
+&lt;li>Start the world.&lt;/li>
+&lt;/ul>
+&lt;h3 id="runtimemstart">&lt;code>runtime.mstart&lt;/code>&lt;/h3>
+&lt;p>&lt;code>mstart0&lt;/code> set up the stack info, then calls &lt;code>runtime.mstart1&lt;/code> to allocate the m:&lt;/p></description></item><item><title>Go Runtime Implementations: Goroutines</title><link>https://blog.kassiansun.com/posts/go-source-code-part-8/</link><pubDate>Wed, 12 Oct 2022 14:42:48 +0800</pubDate><guid>https://blog.kassiansun.com/posts/go-source-code-part-8/</guid><description>&lt;h2 id="preface">Preface&lt;/h2>
+&lt;ul>
+&lt;li>Code path: &lt;code>src/runtime/proc.go&lt;/code>&lt;/li>
+&lt;li>Data structures are defined under &lt;code>src/runtime/runtime2.go&lt;/code>.&lt;/li>
+&lt;/ul>
+&lt;h3 id="concepts">Concepts&lt;/h3>
+&lt;p>Copied from source code:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-go" data-lang="go">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// G - goroutine.
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// M - worker thread, or machine.
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// P - processor, a resource that is required to execute Go code.
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// M must have an associated P to execute Go code, however it can be
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// blocked or in a syscall w/o an associated P.
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="main">&lt;code>main&lt;/code>&lt;/h2>
+&lt;ul>
+&lt;li>Set up stack size.&lt;/li>
+&lt;li>Fork a new &lt;code>m&lt;/code> and run the &lt;code>sysmon&lt;/code> function, except the wasm platform.&lt;/li>
+&lt;li>Lock the main &lt;code>m&lt;/code> and &lt;code>g&lt;/code>.&lt;/li>
+&lt;li>Run the runtime &lt;code>initTask&lt;/code>&amp;rsquo;s.&lt;/li>
+&lt;li>Enable GC.&lt;/li>
+&lt;li>Run the main &lt;code>initTask&lt;/code>&amp;rsquo;s.&lt;/li>
+&lt;li>Run &lt;code>main_main&lt;/code>.&lt;/li>
+&lt;/ul>
+&lt;h3 id="runtimesysmon">&lt;code>runtime.sysmon&lt;/code>&lt;/h3>
+&lt;p>&lt;code>sysmon&lt;/code> is a global worker runs regularly to ensure the system state consistency.&lt;/p></description></item><item><title>Go Runtime Implementations: Channel</title><link>https://blog.kassiansun.com/posts/go-source-code-part-7/</link><pubDate>Thu, 29 Sep 2022 11:24:26 +0800</pubDate><guid>https://blog.kassiansun.com/posts/go-source-code-part-7/</guid><description>&lt;ul>
+&lt;li>Path: &lt;code>src/runtime/chan.go&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;h2 id="compilation">Compilation&lt;/h2>
+&lt;p>When you make a chan with &lt;code>make&lt;/code> function, the compiler will expand the expression to the &lt;code>makechan&lt;/code> implementation. The actual expansion happens
+at &lt;code>cmd/compile/internal/walk/expr.go&lt;/code>. The runtime will determine whether to use &lt;code>makechan&lt;/code> or &lt;code>makechan64&lt;/code>.&lt;/p>
+&lt;h2 id="type-definitions">Type Definitions&lt;/h2>
+&lt;h3 id="type-_type">&lt;code>type _type&lt;/code>&lt;/h3>
+&lt;p>&lt;code>_type&lt;/code> is used as the internal representation of a &lt;code>go&lt;/code> type. The same structure is defined multiple times across the &lt;code>go&lt;/code> runtime.
+&lt;code>_type&lt;/code> stores the following fields:&lt;/p>
+&lt;h3 id="type-chantype">&lt;code>type chantype&lt;/code>&lt;/h3>
+&lt;p>&lt;code>makechan&lt;/code> only uses &lt;code>chantype.elem&lt;/code>, the other fields are used by the type system.&lt;/p></description></item><item><title>Travesal Through The Go Compiler, Part 6</title><link>https://blog.kassiansun.com/posts/go-source-code-part-6/</link><pubDate>Tue, 20 Sep 2022 10:39:15 +0800</pubDate><guid>https://blog.kassiansun.com/posts/go-source-code-part-6/</guid><description>&lt;h2 id="ssagencompile">&lt;code>ssagen.Compile&lt;/code>&lt;/h2>
+&lt;h3 id="build-ssa-for-the-irfunc-buildssa">Build SSA for the &lt;code>ir.Func&lt;/code> (&lt;code>buildssa&lt;/code>)&lt;/h3>
+&lt;ul>
+&lt;li>Check &lt;code>ssaDump&lt;/code> and set the dump flag.&lt;/li>
+&lt;li>Initialize &lt;code>ssagen.state&lt;/code>.&lt;/li>
+&lt;li>Push the line number or the parent&amp;rsquo;s line number (if it&amp;rsquo;s missing) to the stack.&lt;/li>
+&lt;li>Set up &lt;code>ssagen.state&lt;/code> flags from &lt;code>ir.Func&lt;/code> information.&lt;/li>
+&lt;li>Set up an empty &lt;code>ssagen.ssafn&lt;/code> with &lt;code>ir.Func&lt;/code> and ABI information.&lt;/li>
+&lt;li>Allocate the starting block for the current &lt;code>ssa.Func&lt;/code>.&lt;/li>
+&lt;li>Check open-coded defers. &amp;lt;- What&amp;rsquo;s this?&lt;/li>
+&lt;li>Do &lt;code>ABIAnalyze&lt;/code>, get the &lt;code>abi.ABIParamResultInfo&lt;/code> of function in/out parameters.&lt;/li>
+&lt;li>Generate the addresses of the local variables saved in &lt;code>ir.Func.Dcl&lt;/code>.&lt;/li>
+&lt;li>Generate the &lt;code>AuxCall&lt;/code> for the current function.&lt;/li>
+&lt;li>Generate the addresses of the input parameters saved in &lt;code>ir.Func.Dcl&lt;/code>.&lt;/li>
+&lt;li>Generate the addresses of the closure variables saved in &lt;code>ir.Func.Dcl&lt;/code>.&lt;/li>
+&lt;li>Covert to SSA IR. I don&amp;rsquo;t have any experience with SSA, so it&amp;rsquo;s really difficult to understand this part of the code.
+&lt;ul>
+&lt;li>Insert Phi values. &amp;lt;- What&amp;rsquo;s this?&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>Call &lt;code>ssa.Compile&lt;/code>. It defines an array of &lt;code>ssa.pass&lt;/code>, and run each of them against the &lt;code>ssa.Func&lt;/code>.&lt;/li>
+&lt;/ul>
+&lt;h3 id="generate-ssa-genssa">Generate SSA (&lt;code>genssa&lt;/code>)&lt;/h3>
+&lt;p>This step returns a &lt;code>objw.Progs&lt;/code> to save the machine-level instructions of the function. &lt;code>objw&lt;/code> saves platform-independent structures of the binary.&lt;/p></description></item><item><title>Travesal Through The Go Compiler, Part 5</title><link>https://blog.kassiansun.com/posts/go-source-code-part-5/</link><pubDate>Mon, 19 Sep 2022 10:54:34 +0800</pubDate><guid>https://blog.kassiansun.com/posts/go-source-code-part-5/</guid><description>&lt;h2 id="irgengenerate">&lt;code>irgen.generate&lt;/code>&lt;/h2>
+&lt;ul>
+&lt;li>Check each file&amp;rsquo;s pragma list and &lt;code>DeclList&lt;/code>.&lt;/li>
+&lt;li>Generate &lt;code>ir.Decl&lt;/code> for &lt;code>type&lt;/code> declarations.&lt;/li>
+&lt;li>Generate &lt;code>ir.Decl&lt;/code> for other declarations.&lt;/li>
+&lt;li>Process later functions, this step is for the same purpose as type check.&lt;/li>
+&lt;li>Type-check &lt;code>CallExpr&lt;/code> again.&lt;/li>
+&lt;li>Check missing function bodies.&lt;/li>
+&lt;li>Build generic instantiations. It scans calls and generated needed methods.&lt;/li>
+&lt;li>Remove all generic &lt;code>Decl&lt;/code>&amp;rsquo;s.&lt;/li>
+&lt;/ul>
+&lt;p>After &lt;code>irgen.generate&lt;/code>, &lt;code>g.target.Decls&lt;/code> will be the final &lt;code>Decl&lt;/code>&amp;rsquo;s to generate.&lt;/p>
+&lt;h2 id="enqueuefunc-and-compilefunctions">&lt;code>enqueueFunc&lt;/code> and &lt;code>compileFunctions&lt;/code>&lt;/h2>
+&lt;p>This step is the compile step of &lt;code>cmd/compile&lt;/code>, it happens after type checking and IR generation.&lt;/p></description></item><item><title>Travesal Through The Go Compiler, Part 4</title><link>https://blog.kassiansun.com/posts/go-source-code-part-4/</link><pubDate>Sun, 18 Sep 2022 14:09:58 +0800</pubDate><guid>https://blog.kassiansun.com/posts/go-source-code-part-4/</guid><description>&lt;h2 id="noderloadpackage">&lt;code>noder.LoadPackage&lt;/code>&lt;/h2>
+&lt;h3 id="parsing">Parsing&lt;/h3>
+&lt;p>&lt;code>noder.LoadPackage&lt;/code> will call &lt;code>syntax.Parse&lt;/code> to generate the syntax tree of all package files.&lt;/p>
+&lt;ul>
+&lt;li>Initialize a &lt;code>compile/internal/syntax.scanner&lt;/code>&lt;/li>
+&lt;li>Advance &lt;code>scanner&lt;/code> to the next token.&lt;/li>
+&lt;li>Start parsing.
+&lt;ul>
+&lt;li>Check the &lt;code>package&lt;/code> declaration first, and take the package name from the parsed pragma.&lt;/li>
+&lt;li>Note that the parser is expecting a &lt;code>;&lt;/code> token, but this is automatically generated at the scanner, so users don&amp;rsquo;t have to write the &lt;code>;&lt;/code>. And parsing errors will not always abort the parser loop.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>Parse top-level declarations: &lt;code>const&lt;/code> &lt;code>type&lt;/code> &lt;code>var&lt;/code> &lt;code>func&lt;/code>
+&lt;ul>
+&lt;li>Each type has its function to parse the whole syntax tree.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h3 id="type-checking">Type Checking&lt;/h3>
+&lt;p>After &lt;code>syntax.Parse&lt;/code>, &lt;code>check2&lt;/code> is called to do the IR generation.&lt;/p></description></item><item><title>Travesal Through The Go Compiler, Part 3</title><link>https://blog.kassiansun.com/posts/go-source-code-part-3/</link><pubDate>Sat, 17 Sep 2022 09:29:52 +0800</pubDate><guid>https://blog.kassiansun.com/posts/go-source-code-part-3/</guid><description>&lt;h2 id="buildtoolchain">BuildToolchain&lt;/h2>
+&lt;p>BuildToolchain is initialized as &lt;code>noToolchain{}&lt;/code> by default, then it&amp;rsquo;s set dynamically to &lt;code>gccgo&lt;/code> or &lt;code>gc&lt;/code>.
+Both implementations are wrappers around the binary toolchains installed on the machine. For &lt;code>gc&lt;/code>, the delegations are as follows:&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>BuildToolchain.gc&lt;/code> - &lt;code>base.Tool(&amp;quot;compile&amp;quot;)&lt;/code>&lt;/li>
+&lt;li>&lt;code>BuildToolchain.cc&lt;/code> - &lt;code>base.Tool(&amp;quot;cgo&amp;quot;)&lt;/code>. Actually &lt;code>cgo&lt;/code> has been executed before the compile and &lt;code>cfiles&lt;/code> has been cleared, so &lt;code>BuildToolchain.cc&lt;/code> should never be called and it always returns an error.&lt;/li>
+&lt;li>&lt;code>BuildToolchain.asm&lt;/code> - &lt;code>base.Tool(&amp;quot;asm&amp;quot;)&lt;/code>&lt;/li>
+&lt;li>&lt;code>BuildToolchain.pack&lt;/code> - &lt;code>base.Tool(&amp;quot;pack&amp;quot;)&lt;/code>&lt;/li>
+&lt;li>&lt;code>BuildToolchain.ld&lt;/code> - &lt;code>base.Tool(&amp;quot;link&amp;quot;)&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;h2 id="cmdcompile-aka-basetoolcompile">&lt;code>cmd/compile&lt;/code> aka base.Tool(&amp;ldquo;compile&amp;rdquo;)&lt;/h2>
+&lt;ul>
+&lt;li>Entry point: &lt;code>internal/gc.Main&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;p>It&amp;rsquo;s a standalone binary which means all packages path assumes a relative path to &lt;code>go/src/cmd/compile&lt;/code>.
+&lt;code>gc.Main&lt;/code> will get an &lt;code>archInit&lt;/code> function as the parameter, this function populates the &lt;code>ssagen.ArchInfo&lt;/code> which contains necessary architecture information.&lt;/p></description></item><item><title>Travesal Through The Go Compiler, Part 2</title><link>https://blog.kassiansun.com/posts/go-source-code-part-2/</link><pubDate>Fri, 16 Sep 2022 15:16:23 +0800</pubDate><guid>https://blog.kassiansun.com/posts/go-source-code-part-2/</guid><description>&lt;h2 id="builderbuild">&lt;code>Builder.build&lt;/code>&lt;/h2>
+&lt;p>&lt;code>Builder.build&lt;/code> generate an archive for a single package.&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>Builder.build&lt;/code> gets building information from two sources:
+&lt;ul>
+&lt;li>&lt;code>internal/cfg&lt;/code> package. It contains some global variables saving build flags.&lt;/li>
+&lt;li>&lt;code>load.Package&lt;/code>. It contains information for the current building package.&lt;/li>
+&lt;li>&lt;code>Builder.build&lt;/code> will build a &lt;code>need&lt;/code> flag, finish the step and uncheck the finished bits one by one.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>Set up caching information by action, its package, and package&amp;rsquo;s target.&lt;/li>
+&lt;li>Set up objects output directory.&lt;/li>
+&lt;li>Setup &lt;code>cgo&lt;/code> cache &amp;amp; &lt;code>vet&lt;/code> cache.&lt;/li>
+&lt;li>Set up building target directory.&lt;/li>
+&lt;li>Set up non-Go files overlay. This step is to copy the non-Go files to the object directory.&lt;/li>
+&lt;li>Preprocess coverage files and replace the file path of original &lt;code>*.go&lt;/code> files.
+&lt;ul>
+&lt;li>It runs &lt;code>go tool cover -mode=b.coverMode -var=&amp;quot;varName&amp;quot; -o dst.go src.go&lt;/code> to generate the coverage files.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>Build &lt;code>cgo&lt;/code> files.
+&lt;ul>
+&lt;li>After the build, the &lt;code>cfiles&lt;/code> will be cleared and generated go files will be added to &lt;code>gofiles&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>Cache all source files. It&amp;rsquo;s all &lt;code>*.go&lt;/code> files now&lt;/li>
+&lt;li>Generate import configuration and package dependencies information.&lt;/li>
+&lt;li>Generate embedded files configuration.&lt;/li>
+&lt;li>Run &lt;code>BuildToolchain.gc&lt;/code>. This is the actual &lt;code>go&lt;/code> build stage.&lt;/li>
+&lt;li>Run &lt;code>BuildToolchain.cc&lt;/code>. This is the actual &lt;code>cgo&lt;/code> build stage.&lt;/li>
+&lt;li>Run &lt;code>BuildToolchain.asm&lt;/code>. This is the actual &lt;code>*.s&lt;/code> build stage.&lt;/li>
+&lt;li>Run &lt;code>BuildToolchain.pack&lt;/code>. This will generate the object archive (&lt;code>*.a&lt;/code>).&lt;/li>
+&lt;li>Update the &lt;code>BuildID&lt;/code> accordingly.&lt;/li>
+&lt;/ul>
+&lt;h2 id="builderlink">&lt;code>Builder.link&lt;/code>&lt;/h2>
+&lt;p>&lt;code>Builder.link&lt;/code> links a package and generates the final binary. It&amp;rsquo;s very simple compared with the build stage.&lt;/p></description></item><item><title>Traversal Through The Go Compiler, Part 1</title><link>https://blog.kassiansun.com/posts/go-source-code-part-1/</link><pubDate>Thu, 15 Sep 2022 08:48:31 +0800</pubDate><guid>https://blog.kassiansun.com/posts/go-source-code-part-1/</guid><description>&lt;h2 id="set-up-the-environment">Set Up the Environment&lt;/h2>
+&lt;p>&lt;code>vim-go&lt;/code> doesn&amp;rsquo;t support travesal through the &lt;code>go&lt;/code> source code, so I switch to &lt;code>vscode&lt;/code> and it works out of box (with Go plugin &amp;amp;&amp;amp; &lt;code>gopls&lt;/code> installed).&lt;/p>
+&lt;h2 id="start-point-go-run">Start Point (&lt;code>go run&lt;/code>)&lt;/h2>
+&lt;ul>
+&lt;li>File: &lt;code>src/cmd/go/main.go&lt;/code>&lt;/li>
+&lt;li>Declaration: &lt;code>run.CmdRun&lt;/code>&lt;/li>
+&lt;li>Function: &lt;code>run.runRun&lt;/code>&lt;/li>
+&lt;li>Key data structures:
+&lt;ul>
+&lt;li>&lt;code>build.Context&lt;/code>&lt;/li>
+&lt;li>&lt;code>work.Builder&lt;/code>&lt;/li>
+&lt;li>&lt;code>load.Package&lt;/code>&lt;/li>
+&lt;li>&lt;code>work.Action&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;p>The &lt;code>runRun&lt;/code> function will go through several stages:&lt;/p>
+&lt;ul>
+&lt;li>Check &lt;code>shouldUseOutsideModuleMode&lt;/code>. This procedure is used by &lt;code>go run cmd@version&lt;/code>&lt;/li>
+&lt;li>&lt;code>work.BuildInit&lt;/code>. This will setup the build context:
+&lt;ul>
+&lt;li>Initialize &lt;code>modload&lt;/code> module. It will check go module flags and set up the flags, no actual module download.&lt;/li>
+&lt;li>&lt;code>instrumentInit&lt;/code> and &lt;code>buildModeInit&lt;/code>, and update the default &lt;code>build.Context&lt;/code> accordingly.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>Get a &lt;code>work.Builder&lt;/code>. &lt;code>work.NewBuilder&lt;/code> will check the environment and make sure it&amp;rsquo;s ready to do the actual build.&lt;/li>
+&lt;li>Inits a &lt;code>load.Package&lt;/code> from all &lt;code>*.go&lt;/code> files passed to &lt;code>go run&lt;/code>.
+&lt;ul>
+&lt;li>&lt;code>load.Package&lt;/code> has a public struct for definitions, and an internal struct for running state.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>Setup &lt;code>builder.LinkAction&lt;/code>. &lt;code>LinkAction&lt;/code> will call &lt;code>cacheAction&lt;/code> (for looking up action cache, not build cache), &lt;code>CompileAction&lt;/code>, and &lt;code>installAction&lt;/code> (not for &lt;code>go run&lt;/code>).
+&lt;ul>
+&lt;li>&lt;code>work.Action&lt;/code> is a DAG, the action cache depends on &lt;code>mode&lt;/code> and package info.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>Initialize a &lt;code>work.Action&lt;/code>, use the link action initialized at the above stage as dependencies.&lt;/li>
+&lt;li>Build the &lt;code>work.Action&lt;/code> with builder.&lt;/li>
+&lt;/ul>
+&lt;h2 id="build-stage-builderdo">Build Stage (&lt;code>Builder.Do&lt;/code>)&lt;/h2>
+&lt;ul>
+&lt;li>Set up the cache trim. There&amp;rsquo;s a &lt;code>trim.txt&lt;/code> inside &lt;code>go-build&lt;/code> cache folder, it&amp;rsquo;s used to track the timestamp of last trim action.&lt;/li>
+&lt;li>Build the action list, visit the DAG as &amp;ldquo;depth-first post-order travelsal&amp;rdquo;. The priority will set by the list order, which means deepest will run first.&lt;/li>
+&lt;li>&lt;code>writeActionGraph&lt;/code>. Internal feature, this will dump the DAG as JSON.&lt;/li>
+&lt;li>Set up triggers. Triggers are the inverse of dependencies, which means when the dependency ready, it will trigger its root instead of its dependencies.&lt;/li>
+&lt;li>The &lt;code>handle&lt;/code> function will do the actual jobs.
+&lt;ul>
+&lt;li>Actions are run in parallel, the actual job is defined by &lt;code>action.Func&lt;/code>.&lt;/li>
+&lt;li>After actions done, update the global state. There&amp;rsquo;s a lock to make sure there&amp;rsquo;s no data races.&lt;/li>
+&lt;li>If all dependencies finished, push the action node to ready queue and signal the &lt;code>readySema&lt;/code>. Ready queue are protected with the same global state lock.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>Run all actions from the DAG in parallel.&lt;/li>
+&lt;/ul>
+&lt;h2 id="whats-next">What&amp;rsquo;s Next&lt;/h2>
+&lt;p>Travesal through the &lt;code>action.Func&lt;/code> definitions:&lt;/p></description></item></channel></rss>
