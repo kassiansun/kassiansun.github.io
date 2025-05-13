@@ -1,4 +1,16 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Posts on Kassian Sun</title><link>https://blog.kassiansun.com/posts/</link><description>Recent content in Posts on Kassian Sun</description><generator>Hugo -- 0.134.2</generator><language>en</language><lastBuildDate>Tue, 16 Jul 2024 13:41:49 +0800</lastBuildDate><atom:link href="https://blog.kassiansun.com/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Go Runtime Implementation: CGO</title><link>https://blog.kassiansun.com/posts/go-source-code-part-21/</link><pubDate>Tue, 16 Jul 2024 13:41:49 +0800</pubDate><guid>https://blog.kassiansun.com/posts/go-source-code-part-21/</guid><description>&lt;ul>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Posts on Kassian Sun</title><link>https://blog.kassiansun.com/posts/</link><description>Recent content in Posts on Kassian Sun</description><generator>Hugo -- 0.147.3</generator><language>en</language><lastBuildDate>Tue, 13 May 2025 13:22:21 +0800</lastBuildDate><atom:link href="https://blog.kassiansun.com/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Why Do We Work</title><link>https://blog.kassiansun.com/posts/why-do-we-work/</link><pubDate>Tue, 13 May 2025 13:22:21 +0800</pubDate><guid>https://blog.kassiansun.com/posts/why-do-we-work/</guid><description>&lt;p>Why do we work? It came to my mind just now, and it&amp;rsquo;s not strange: I just told my boss
+that I&amp;rsquo;ll quit my job yesterday, and it&amp;rsquo;s not strange that a person who doesn&amp;rsquo;t want to
+work will think something about not to work.&lt;/p>
+&lt;p>So we didn&amp;rsquo;t have to work, and we didn&amp;rsquo;t have such abundance of goods at that time. We
+plant the seed, wait for the crops to grow, and feed on them. Even further, once we didn&amp;rsquo;t
+farm, and feed on the natural environment, although that we were hungry and vunerable.&lt;/p></description></item><item><title>Start Over</title><link>https://blog.kassiansun.com/posts/start-over/</link><pubDate>Tue, 13 May 2025 11:35:25 +0800</pubDate><guid>https://blog.kassiansun.com/posts/start-over/</guid><description>&lt;p>It has been more than 3 years (!) since I wrote the &lt;a href="https://blog.kassiansun.com/posts/hello-world/">initial blog&lt;/a>, so many things
+have changed now. One of my initial motivations is that &amp;ldquo;I need a place to hold all those non-that-interesting
+stuffs&amp;rdquo;, but now I&amp;rsquo;ve switch to Zotero, and this becomes a non-issue, Zotero is perfect tool to organize all
+pieces into a single place.&lt;/p>
+&lt;p>So what now then? I guess I don&amp;rsquo;t need to drain my energy to read all those boring Go source to code just to
+keep my &amp;ldquo;promise&amp;rdquo; that I started a series, and it&amp;rsquo;s time to write something really matters to me and that I want
+to share with others. They don&amp;rsquo;t have to be &amp;ldquo;cool&amp;rdquo;, or &amp;ldquo;correct&amp;rdquo;, or &amp;ldquo;matters to others&amp;rdquo;, they&amp;rsquo;re just some pieces
+of thought.&lt;/p></description></item><item><title>Go Runtime Implementation: CGO</title><link>https://blog.kassiansun.com/posts/go-source-code-part-21/</link><pubDate>Tue, 16 Jul 2024 13:41:49 +0800</pubDate><guid>https://blog.kassiansun.com/posts/go-source-code-part-21/</guid><description>&lt;ul>
 &lt;li>Code Path: &lt;code>src/runtime/cgocall.go&lt;/code>&lt;/li>
 &lt;/ul>
 &lt;p>The key part here is to switch the stack between &lt;code>Go&lt;/code> and &lt;code>CGO&lt;/code>&lt;/p>
@@ -39,8 +51,7 @@ called &lt;code>cgocallback&lt;/code>&lt;/li>
 &lt;p>The older way involves creating a
 defer record at the time that a defer statement is executing and adding it to a
 defer chain. This chain is inspected by the deferreturn call at all function
-exits in order to run the appropriate defer calls.&lt;/p>
-&lt;/blockquote>
+exits in order to run the appropriate defer calls.&lt;/p>&lt;/blockquote>
 &lt;blockquote>
 &lt;p>A cheaper way (which we call open-coded defers) is used for functions in which no defer statements occur in
 loops. In that case, we simply store the defer function/arg information into
@@ -191,7 +202,7 @@ then adds the new timer. Each &lt;code>timers&lt;/code> list is a heap sorted by
 &lt;p>&lt;code>doaddtimer&lt;/code> link the time to the &lt;code>p&lt;/code>&amp;rsquo;s &lt;code>timers&lt;/code> list, and sift up the heap to put it in the right position.&lt;/p></description></item><item><title>Go Runtime Implementations: Network Polling</title><link>https://blog.kassiansun.com/posts/go-source-code-part-17/</link><pubDate>Sat, 05 Nov 2022 08:56:11 +0800</pubDate><guid>https://blog.kassiansun.com/posts/go-source-code-part-17/</guid><description>&lt;ul>
 &lt;li>Code Path: &lt;code>src/runtime/netpoll.go&lt;/code>&lt;/li>
 &lt;/ul>
-&lt;p>Network polling is platform-dependent, the following is of BSD family operating systems (based on &lt;a href="https://www.freebsd.org/cgi/man.cgi?query=kqueue&amp;apropos=0&amp;sektion=2&amp;manpath=FreeBSD+14.0-current&amp;arch=default&amp;format=html">kqueue&lt;/a>).&lt;/p>
+&lt;p>Network polling is platform-dependent, the following is of BSD family operating systems (based on &lt;a href="https://www.freebsd.org/cgi/man.cgi?query=kqueue&amp;amp;apropos=0&amp;amp;sektion=2&amp;amp;manpath=FreeBSD&amp;#43;14.0-current&amp;amp;arch=default&amp;amp;format=html">kqueue&lt;/a>).&lt;/p>
 &lt;h2 id="netpollinit">&lt;code>netpollinit&lt;/code>&lt;/h2>
 &lt;ul>
 &lt;li>Initialize a &lt;code>kqueue&lt;/code> descriptor, and set &lt;code>CLOSEXEC&lt;/code> flag on it.&lt;/li>
@@ -348,12 +359,12 @@ In &lt;code>stackinit&lt;/code>, the stack pool will be initialized right after 
 &lt;/ul>
 &lt;h3 id="concepts">Concepts&lt;/h3>
 &lt;p>Copied from source code:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-go" data-lang="go">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// G - goroutine.
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// M - worker thread, or machine.
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// P - processor, a resource that is required to execute Go code.
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// M must have an associated P to execute Go code, however it can be
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// blocked or in a syscall w/o an associated P.
-&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="main">&lt;code>main&lt;/code>&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-go" data-lang="go">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// G - goroutine.&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// M - worker thread, or machine.&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// P - processor, a resource that is required to execute Go code.&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// M must have an associated P to execute Go code, however it can be&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// blocked or in a syscall w/o an associated P.&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="main">&lt;code>main&lt;/code>&lt;/h2>
 &lt;ul>
 &lt;li>Set up stack size.&lt;/li>
 &lt;li>Fork a new &lt;code>m&lt;/code> and run the &lt;code>sysmon&lt;/code> function, except the wasm platform.&lt;/li>
@@ -640,7 +651,7 @@ switching &lt;code>Source&lt;/code> to the correct branch, it works now.&lt;/p><
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-text" data-lang="text">&lt;span style="display:flex;">&lt;span>Error: Error building site: TOCSS: failed to transform &amp;#34;ananke/css/main.css&amp;#34; (text/css). Check your Hugo installation; you need the extended version to build SCSS/SASS.: this feature is not available in your current Hugo version, see https://goo.gl/YMrWcn for more information
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>So the answer is simple, comment the &lt;code>#extended: true&lt;/code> in &lt;code>.github/workflows/gh-pages.yml&lt;/code>, the extended version of Hugo will
 support building scss/sass. The official documentation didn&amp;rsquo;t mention any on this configuration, so I guess this is a too simple
-question to mention on the document, just a commented line of correct configuration should be good enough to let people know this.&lt;/p></description></item><item><title>Hello Word</title><link>https://blog.kassiansun.com/posts/hello-word/</link><pubDate>Mon, 22 Nov 2021 11:03:54 +0800</pubDate><guid>https://blog.kassiansun.com/posts/hello-word/</guid><description>&lt;p>Yes, this is my first post.&lt;/p>
+question to mention on the document, just a commented line of correct configuration should be good enough to let people know this.&lt;/p></description></item><item><title>Hello Word</title><link>https://blog.kassiansun.com/posts/hello-world/</link><pubDate>Mon, 22 Nov 2021 11:03:54 +0800</pubDate><guid>https://blog.kassiansun.com/posts/hello-world/</guid><description>&lt;p>Yes, this is my first post.&lt;/p>
 &lt;p>Recently I&amp;rsquo;m reading &amp;lt;Own Your Tech Career&amp;gt;, the idea of the book is great.
 Although I don&amp;rsquo;t know the author personally, we share many same thoughts on technology, career, and life.
 The most important thing I learned is how to get engaged in communities &amp;amp; build a personal brand. One thing is

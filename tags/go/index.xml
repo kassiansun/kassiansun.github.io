@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Go on Kassian Sun</title><link>https://blog.kassiansun.com/tags/go/</link><description>Recent content in Go on Kassian Sun</description><generator>Hugo -- 0.134.2</generator><language>en</language><lastBuildDate>Wed, 23 Nov 2022 16:51:25 +0800</lastBuildDate><atom:link href="https://blog.kassiansun.com/tags/go/index.xml" rel="self" type="application/rss+xml"/><item><title>Go Runtime Implementations: Map</title><link>https://blog.kassiansun.com/posts/go-source-code-part-19/</link><pubDate>Wed, 23 Nov 2022 16:51:25 +0800</pubDate><guid>https://blog.kassiansun.com/posts/go-source-code-part-19/</guid><description>&lt;ul>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Go on Kassian Sun</title><link>https://blog.kassiansun.com/tags/go/</link><description>Recent content in Go on Kassian Sun</description><generator>Hugo -- 0.147.3</generator><language>en</language><lastBuildDate>Wed, 23 Nov 2022 16:51:25 +0800</lastBuildDate><atom:link href="https://blog.kassiansun.com/tags/go/index.xml" rel="self" type="application/rss+xml"/><item><title>Go Runtime Implementations: Map</title><link>https://blog.kassiansun.com/posts/go-source-code-part-19/</link><pubDate>Wed, 23 Nov 2022 16:51:25 +0800</pubDate><guid>https://blog.kassiansun.com/posts/go-source-code-part-19/</guid><description>&lt;ul>
 &lt;li>Code Path: &lt;code>src/runtime/map.go&lt;/code>&lt;/li>
 &lt;/ul>
 &lt;h2 id="makemap">&lt;code>makemap&lt;/code>&lt;/h2>
@@ -22,7 +22,7 @@ then adds the new timer. Each &lt;code>timers&lt;/code> list is a heap sorted by
 &lt;p>&lt;code>doaddtimer&lt;/code> link the time to the &lt;code>p&lt;/code>&amp;rsquo;s &lt;code>timers&lt;/code> list, and sift up the heap to put it in the right position.&lt;/p></description></item><item><title>Go Runtime Implementations: Network Polling</title><link>https://blog.kassiansun.com/posts/go-source-code-part-17/</link><pubDate>Sat, 05 Nov 2022 08:56:11 +0800</pubDate><guid>https://blog.kassiansun.com/posts/go-source-code-part-17/</guid><description>&lt;ul>
 &lt;li>Code Path: &lt;code>src/runtime/netpoll.go&lt;/code>&lt;/li>
 &lt;/ul>
-&lt;p>Network polling is platform-dependent, the following is of BSD family operating systems (based on &lt;a href="https://www.freebsd.org/cgi/man.cgi?query=kqueue&amp;apropos=0&amp;sektion=2&amp;manpath=FreeBSD+14.0-current&amp;arch=default&amp;format=html">kqueue&lt;/a>).&lt;/p>
+&lt;p>Network polling is platform-dependent, the following is of BSD family operating systems (based on &lt;a href="https://www.freebsd.org/cgi/man.cgi?query=kqueue&amp;amp;apropos=0&amp;amp;sektion=2&amp;amp;manpath=FreeBSD&amp;#43;14.0-current&amp;amp;arch=default&amp;amp;format=html">kqueue&lt;/a>).&lt;/p>
 &lt;h2 id="netpollinit">&lt;code>netpollinit&lt;/code>&lt;/h2>
 &lt;ul>
 &lt;li>Initialize a &lt;code>kqueue&lt;/code> descriptor, and set &lt;code>CLOSEXEC&lt;/code> flag on it.&lt;/li>
@@ -179,12 +179,12 @@ In &lt;code>stackinit&lt;/code>, the stack pool will be initialized right after 
 &lt;/ul>
 &lt;h3 id="concepts">Concepts&lt;/h3>
 &lt;p>Copied from source code:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-go" data-lang="go">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// G - goroutine.
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// M - worker thread, or machine.
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// P - processor, a resource that is required to execute Go code.
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// M must have an associated P to execute Go code, however it can be
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// blocked or in a syscall w/o an associated P.
-&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="main">&lt;code>main&lt;/code>&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-go" data-lang="go">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// G - goroutine.&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// M - worker thread, or machine.&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// P - processor, a resource that is required to execute Go code.&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// M must have an associated P to execute Go code, however it can be&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// blocked or in a syscall w/o an associated P.&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="main">&lt;code>main&lt;/code>&lt;/h2>
 &lt;ul>
 &lt;li>Set up stack size.&lt;/li>
 &lt;li>Fork a new &lt;code>m&lt;/code> and run the &lt;code>sysmon&lt;/code> function, except the wasm platform.&lt;/li>
