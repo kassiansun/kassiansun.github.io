@@ -26,6 +26,6 @@ through a lengthy blog just to find some steps to follow to solve a specific pro
 
 Nowadays most people don't even bother reading anymore, so what's the point of writing (and of course reading)?
 It's about the meaning, ultimately, we're just some moving creatures that interact with the world, then why
-spend more time on yourself? Read those you like, write those you share, human are social animals and this is
+not spend more time on yourself? Read those you like, write those you share, human are social animals and this is
 the exact reason we developed languages. We didn't develop it to speak laws or philosophy, we did develop it to
-speak ourselves
+speak ourselves.
